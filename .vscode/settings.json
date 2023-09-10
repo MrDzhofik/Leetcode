@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "clang-format.executable": "/usr/binclang-format",
     "array": "cpp",
     "atomic": "cpp",
     "bit": "cpp",
