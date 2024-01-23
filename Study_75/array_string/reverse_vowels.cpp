@@ -1,19 +1,28 @@
+// Given a string s, reverse only all the vowels in the string and return it.
+
+// The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
 #include <algorithm>
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-string reverseVowels(string s) {
+string reverseVowels(string s)
+{
   vector<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
   vector<int> indexes;
   int size = s.size();
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < size; i++)
+  {
     if ((std::find(vowels.begin(), vowels.end(), s[i]) != vowels.end()) &&
-        (std::find(indexes.begin(), indexes.end(), i) == indexes.end())) {
-      for (int j = size - 1; j > i; j--) {
+        (std::find(indexes.begin(), indexes.end(), i) == indexes.end()))
+    {
+      for (int j = size - 1; j > i; j--)
+      {
         if ((std::find(vowels.begin(), vowels.end(), s[j]) != vowels.end()) &&
-            ((std::find(indexes.begin(), indexes.end(), j)) == indexes.end())) {
+            ((std::find(indexes.begin(), indexes.end(), j)) == indexes.end()))
+        {
           char temp = s[i];
           s[i] = s[j];
           s[j] = temp;
@@ -27,7 +36,8 @@ string reverseVowels(string s) {
   return s;
 }
 
-int main() {
+int main()
+{
   string f{"aA"};
   string s{"leetcode"};
   cout << reverseVowels(f) << endl;

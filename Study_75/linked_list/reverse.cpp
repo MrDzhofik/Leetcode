@@ -1,3 +1,5 @@
+// Given the head of a singly linked list, reverse the list, and return the reversed list.
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -18,35 +20,42 @@
 // Input: head = [1,2,3,4,5]
 // Output: [5,4,3,2,1]
 
-typedef struct {
+typedef struct
+{
   int val;
-  ListNode* next;
+  ListNode *next;
 } ListNode;
 
 #include <vector>
 
 using namespace std;
 
-class Solution {
- public:
-  ListNode* reverseList(ListNode* head) {
-    ListNode* q = head;
+class Solution
+{
+public:
+  ListNode *reverseList(ListNode *head)
+  {
+    ListNode *q = head;
     vector<int> nums;
-    while (q != nullptr) {
+    while (q != nullptr)
+    {
       nums.push_back(q->val);
       q = q->next;
     }
     int size = nums.size();
     q = head;
-    for (int i = size - 1; i >= 0; i--) {
+    for (int i = size - 1; i >= 0; i--)
+    {
       q->val = nums[i];
       q = q->next;
     }
     return head;
   }
-  ListNode* reverseList_(ListNode* head) {
-    ListNode* q = head;
-    if (q->next != nullptr) {
+  ListNode *reverseList_(ListNode *head)
+  {
+    ListNode *q = head;
+    if (q->next != nullptr)
+    {
       q = q->next;
       return reverseList(q);
     }

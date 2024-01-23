@@ -1,3 +1,5 @@
+// Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+
 #include <iostream>
 #include <map>
 #include <set>
@@ -5,18 +7,24 @@
 
 using namespace std;
 
-bool uniqueOccurrences(vector<int>& arr) {
+bool uniqueOccurrences(vector<int> &arr)
+{
   map<int, int> counts;
   set<int> occur;
-  for (int i : arr) {
-    if (counts.count(i) > 0) {
+  for (int i : arr)
+  {
+    if (counts.count(i) > 0)
+    {
       counts[i]++;
-    } else {
+    }
+    else
+    {
       counts.insert({i, 1});
     }
   }
   map<int, int>::iterator it = counts.begin();
-  for (int i = 0; it != counts.end(); it++, i++) {
+  for (int i = 0; it != counts.end(); it++, i++)
+  {
     occur.insert(it->second);
   }
   int set_size = occur.size();
@@ -24,7 +32,8 @@ bool uniqueOccurrences(vector<int>& arr) {
   return set_size == map_size;
 }
 
-int main() {
+int main()
+{
   vector<int> f = {1, 2, 2, 1, 1, 3};
   cout << uniqueOccurrences(f) << endl;
   return 0;
