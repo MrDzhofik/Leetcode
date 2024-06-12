@@ -34,9 +34,95 @@
 
 // Input: head = [1,2,3,4,5]
 // Output: [1,3,5,2,4]
+// Definition for singly-linked list.
 
-// class Solution
-// {
-// public:
-//   ListNode *oddEvenList(ListNode *head) {}
-// };
+#include <iostream>
+
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+ListNode *oddEvenList(ListNode *head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        return head;
+    }
+
+    // find odd end of given linked list
+    ListNode *first = head->next;
+    ListNode *second = head;
+    int check = 0;
+
+    while (first->next != nullptr)
+    {
+        second = first;
+        first = first->next;
+        ++check;
+    }
+
+    ListNode *true_end = nullptr;
+
+    if (check % 2)
+    {
+        true_end = first;
+    }
+    else
+    {
+        true_end = second;
+    }
+
+    ListNode *end = true_end;
+    ListNode *i = head;
+    ListNode *j = i->next;
+
+    while (i != true_end && j != true_end)
+    {
+        i->next = j->next;
+        j->next = end->next;
+        end->next = j;
+        i = i->next;
+        j = i->next;
+        end = end->next;
+    }
+
+    return head;
+}
+
+int main()
+{
+    ListNode *head;
+    head = new ListNode(1);
+    ListNode *p = head;
+    ListNode *q = nullptr;
+    for (int i = 2; i < 9; ++i)
+    {
+        q = new ListNode(i);
+        p->next = q;
+        p = p->next;
+    }
+
+    p = head;
+    while (head)
+    {
+        std::cout << head->val << " ";
+        head = head->next;
+    }
+    std::cout << std::endl;
+
+    head = oddEvenList(p);
+
+    while (head)
+    {
+        std::cout << head->val << " ";
+        head = head->next;
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
