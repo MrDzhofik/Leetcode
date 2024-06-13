@@ -11,99 +11,51 @@
 #include <vector>
 #include <stack>
 
-void write_word(std::string &word, std::string &result)
-{
-    int word_size = word.size();
-    for (int j = 0; j < word_size; ++j)
-    {
-        result += word[j];
-    }
-    word.erase();
-}
-
-std::string operator*(std::string word, int repeat)
-{
-    std::string word_2 = word;
-    for (int i = 1; i < repeat; ++i)
-    {
-        word += word_2;
-    }
-    return word;
-}
-
 std::string decodeString(std::string s)
 {
-    std::stack<char> st{};
-    std::string result{};
-    char sym = ' ';
-    int size = s.size();
-    int count = 0;
-    std::string word{};
-    std::string word_2{};
-    int repeat = 0;
-    for (int i = 0; i < size; ++i)
+    std::stack<int> counts;          // Стек для хранения количества повторений
+    std::stack<std::string> results; // Стек для хранения промежуточных результатов
+    std::string result;              // Текущий результат
+    int i = 0;                       // Индекс для прохода по строке
+
+    while (i < s.length())
     {
-        st.push(s[i]);
+        if (isdigit(s[i]))
+        {
+            int count = 0;
+            while (isdigit(s[i]))
+            {
+                count = count * 10 + (s[i] - '0');
+                i++;
+            }
+            counts.push(count);
+        }
+        else if (s[i] == '[')
+        {
+            results.push(result);
+            result.clear();
+            i++;
+        }
+        else if (s[i] == ']')
+        {
+            std::string temp = result;
+            result = results.top();
+            results.pop();
+            int repeat = counts.top();
+            counts.pop();
+            while (repeat-- > 0)
+            {
+                result += temp;
+            }
+            i++;
+        }
+        else
+        {
+            result += s[i];
+            i++;
+        }
     }
 
-    while (st.size() != 0)
-    {
-        sym = st.top();
-        st.pop();
-        if (repeat != 0)
-        {
-            word = word * repeat;
-            repeat = 0;
-        }
-        if (count == 0 && (sym > 57 || sym < 48))
-        {
-            if (word.empty() && sym != ']')
-            {
-                word = sym;
-            }
-            write_word(word, result);
-            repeat = 0;
-        }
-        if (sym == ']')
-        {
-            ++count;
-        }
-
-        else if (sym == '[')
-        {
-            --count;
-        }
-        else if (sym <= 57 && sym >= 48)
-        {
-            int pow = 0;
-            repeat += sym - 48;
-            if (st.size() != 0)
-            {
-                sym = st.top();
-            }
-            while (sym <= 57 && sym >= 48 && st.size() != 0)
-            {
-                sym = st.top();
-                ++pow;
-                repeat += (sym - 48) * (10 * pow);
-                st.pop();
-            }
-        }
-        else if (count != 0)
-        {
-            word += sym;
-        }
-    }
-    word = word * repeat;
-    write_word(word, result);
-    int word_size = result.size();
-    char tmp = ' ';
-    for (int i = 0; i < word_size / 2; ++i)
-    {
-        tmp = result[i];
-        result[i] = result[word_size - 1 - i];
-        result[word_size - 1 - i] = tmp;
-    }
     return result;
 }
 
