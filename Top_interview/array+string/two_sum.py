@@ -24,3 +24,16 @@ class Solution:
                 left += 1
                 right = left + 1
         return ans
+
+    def twoSumN(self, nums: List[int], target: int) -> List[int]:
+        ans = []
+        dct = {}
+        size = len(nums)
+        for i in range(size):
+            if dct.get(target - nums[i]) is None:
+                dct[nums[i]] = i
+            else:
+                ans.append(dct.get(target - nums[i]))
+                ans.append(i)
+
+        return ans
