@@ -9,7 +9,8 @@ from typing import List
 
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    # simple
+    def two_sum(self, nums: List[int], target: int) -> List[int]:
         ans = []
         left = 0
         size = len(nums)
@@ -25,7 +26,8 @@ class Solution:
                 right = left + 1
         return ans
 
-    def twoSumN(self, nums: List[int], target: int) -> List[int]:
+    # hashmap
+    def two_sum_N(self, nums: List[int], target: int) -> List[int]:
         ans = []
         dct = {}
         size = len(nums)
@@ -35,5 +37,25 @@ class Solution:
             else:
                 ans.append(dct.get(target - nums[i]))
                 ans.append(i)
+
+        return ans
+
+    # two pointers
+    def two_sum_sorted(self, numbers: List[int], target: int) -> List[int]:
+        size = len(numbers)
+        left = 0
+        right = size - 1
+        ans = []
+        flag = False
+        while left < right and not flag:
+            curr = numbers[left] + numbers[right]
+            if curr > target:
+                right -= 1
+            elif curr < target:
+                left += 1
+            else:
+                ans.append(left + 1)
+                ans.append(right + 1)
+                flag = True
 
         return ans
